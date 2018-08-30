@@ -5,7 +5,7 @@
  */
 package students.jdbc;
 
-import com.mysql.jdbc.Connection;
+
 import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.DriverManager;
@@ -55,7 +55,7 @@ public class DBConnection {
         }
     }
     
-    public static void close(Connection connection) {
+    public static void close(java.sql.Connection connection) {
         try {
             if (connection != null) {
                 connection.close();
