@@ -86,16 +86,34 @@ public class DaoJDBC implements IDAO{
 
     @Override
     public int delete(Student student) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int deleted = 0;
+        try {
+            conn = (this.userConn != null) ? this.userConn : DBConnection.getConnection();
+            stmt = (PreparedStatement) conn.prepareStatement(SQL_DELETE);
+            int index = 1;
+            stmt.setInt(index++, student.getId_student());
+            System.out.println("Executing QUERY: " +SQL_DELETE);
+            deleted = stmt.executeUpdate();
+            System.out.println("Affected rows: " + deleted);
+        } finally {
+            //Cerramos los objetos PreparedStatement y Connection
+            DBConnection.close(stmt);
+            if (this.userConn == null) {
+                DBConnection.close(conn);
+            }
+        }
+        return deleted;
     }
 
     @Override
     public List<Student> select() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
-        Student student = null;
+        Student student;
         ResultSet rs = null;
-        List<Student> students = new ArrayList<Student>();
+        List<Student> students = new ArrayList<>();
         try {
             conn = (this.userConn != null) ? this.userConn : DBConnection.getConnection();
             stmt = (PreparedStatement) conn.prepareStatement(SQL_SELECT);
