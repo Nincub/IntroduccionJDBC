@@ -5,6 +5,8 @@
  */
 package introduccionjdbc;
 
+import com.dto.Student;
+import java.util.List;
 import students.jdbc.DaoJDBC;
 import students.jdbc.IDAO;
 
@@ -39,12 +41,44 @@ public class IntroduccionJDBC {
         //ya que en este caso es de tipo autonumerico y la BD se encarga
         //de asignarle un nuevo valor
         
-        /*Student student = new Student();
-        student.setName("Benito Camelo");
-        student.setAge(23);
-        student.setCohort(10);*/
+        Student student = new Student();
+        student.setName("Angelito Romero");
+        student.setAge(25);
+        student.setCohort(10);
         
-        
+        try {
+            //----Agregar un registro
+            daoJDBC.insert(student);
+            
+            //----Eliminar un regsitro
+            //daoJdbc.delete(new Student(2));
+            
+            //----Actualizar un registro
+            /*
+                Student studentTmp = new Student();
+                studentTmp.setStudent_id(1);
+                studentTmp.setNombre("jazmin");
+                studentTmp.setEdad(24);
+                studentTmp.setCohort(15);
+                daoJdbc.update(studentTmp);
+            
+            */
+            
+            //Mostrar todos los registros
+            
+            List<Student> students = daoJDBC.select();
+            
+            for (Student s : students) {
+                System.out.println("------------------------");
+                System.out.println("id_Student: "+s.getId_student());
+                System.out.println("Nombre: "+s.getName());
+                System.out.println("edad: "+s.getAge());
+                System.out.println("cohort: "+s.getCohort());
+                System.out.println();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
     }
     
